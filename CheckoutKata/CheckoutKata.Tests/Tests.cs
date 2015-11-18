@@ -42,12 +42,12 @@
 
     public class Checkout
     {
-        private readonly ItemPrice[] _itemPrices;
+        private readonly Dictionary<char, ItemPrice> _itemPrices;
         private readonly List<ItemPrice> _items = new List<ItemPrice>();
 
         public Checkout(params ItemPrice[] itemPrices)
         {
-            _itemPrices = itemPrices;
+            _itemPrices = itemPrices.ToDictionary(x => x.Item);
         }
 
         public double GetTotal()
@@ -55,14 +55,19 @@
             return _items.Sum(x => x.UnitPrice);
         }
 
-        public void Scan(ItemPrice itemPrice)
+        private void Scan(ItemPrice itemPrice)
         {
             _items.Add(itemPrice);
         }
 
         public void Scan(char item)
         {
-            Scan(_itemPrices.Single(x => x.Item == item));
+            Scan(FindItemPrice(item));
+        }
+
+        private ItemPrice FindItemPrice(char item)
+        {
+            return _itemPrices[item];
         }
     }
 }
