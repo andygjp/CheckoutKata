@@ -47,6 +47,7 @@
         [Theory]
         [InlineData(new[] { 'A', 'B' }, 80.0)]
         [InlineData(new[] { 'C', 'D', 'B', 'A' }, 115.0)]
+        [InlineData(new[] { 'A', 'A' }, 100.0)]
         public void It_should_return_expected_value(char[] items, double expected)
         {
             Array.ForEach(items, _sut.Scan);
