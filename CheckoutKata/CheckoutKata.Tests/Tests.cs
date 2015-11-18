@@ -78,12 +78,14 @@
 
     public class When_I_calculate_promotional_price_of_get_x_for_y
     {
-        [Fact]
-        public void It_should_calculate_correct_price()
+        [Theory]
+        [InlineData(2, 100.0)]
+        [InlineData(3, 130.0)]
+        public void It_should_calculate_correct_price(int numberOfUnits, double expected)
         {
             var sut = new ItemPrice('A', 50.0, new GetXForY(3, 130.0));
-            double actual = sut.SubTotal(3);
-            actual.Should().Be(130.0);
+            double actual = sut.SubTotal(numberOfUnits);
+            actual.Should().Be(expected);
         }
     }
 
