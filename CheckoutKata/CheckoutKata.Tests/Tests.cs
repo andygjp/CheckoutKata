@@ -76,16 +76,61 @@
         }
     }
 
+    public class When_I_calculate_promotional_price_of_get_x_for_y
+    {
+        [Fact]
+        public void It_should_calculate_correct_price()
+        {
+            var sut = new ItemPrice('A', 50.0, new GetXForY(3, 130.0));
+            double actual = sut.SubTotal(3);
+            actual.Should().Be(130.0);
+        }
+    }
+
+    public class GetXForY : IPromotion
+    {
+        private readonly int _x;
+        private readonly double _y;
+
+        public GetXForY(int x, double y)
+        {
+            _x = x;
+            _y = y;
+        }
+
+        public double Calculate()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IPromotion
+    {
+        double Calculate();
+    }
+
     public class ItemPrice
     {
+        private readonly IPromotion _promotion;
+
         public ItemPrice(char item, double unitPrice)
         {
             Item = item;
             UnitPrice = unitPrice;
         }
 
+        public ItemPrice(char item, double unitPrice, IPromotion promotion) : this(item, unitPrice)
+        {
+            _promotion = promotion;
+        }
+
         public char Item { get; }
         public double UnitPrice { get; }
+
+        public double SubTotal(int numberOfUnits)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Checkout
