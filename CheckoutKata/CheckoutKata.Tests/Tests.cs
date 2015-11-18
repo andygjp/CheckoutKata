@@ -100,15 +100,15 @@
             _y = y;
         }
 
-        public double Calculate()
+        public double GetPromotionalFactor(int numberOfUnits)
         {
-            throw new NotImplementedException();
+            return 1;
         }
     }
 
     public interface IPromotion
     {
-        double Calculate();
+        double GetPromotionalFactor(int numberOfUnits);
     }
 
     public class ItemPrice
@@ -131,7 +131,16 @@
 
         public double SubTotal(int numberOfUnits)
         {
-            throw new NotImplementedException();
+            double subTotal = 0;
+            int unitCount = 0;
+            while (unitCount < numberOfUnits)
+            {
+                subTotal += UnitPrice;
+                unitCount++;
+                var factor = _promotion.GetPromotionalFactor(unitCount);
+                subTotal *= factor;
+            }
+            return subTotal;
         }
     }
 
