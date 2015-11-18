@@ -1,5 +1,6 @@
 ﻿namespace CheckoutKata.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
@@ -25,6 +26,32 @@
             sut.Scan('A');
             double actual = sut.GetTotal();
             actual.Should().Be(50);
+        }
+    }
+
+    public class DefaultItemPricingFixture
+    {
+        // Return a new instance
+        public Checkout Sut => new Checkout(new ItemPrice('A', 50.0), new ItemPrice('B', 30), new ItemPrice('C', 20.0), new ItemPrice('D', 15.0));
+    }
+
+    public class When_multiple_items_are_scanned : IClassFixture<DefaultItemPricingFixture>
+    {
+        private readonly Checkout _sut;
+
+        public When_multiple_items_are_scanned(DefaultItemPricingFixture fixture)
+        {
+            _sut = fixture.Sut;
+        }
+
+        [Theory]
+        [InlineData(new[] { 'A', 'B' }, 80.0)]
+        [InlineData(new[] { 'C', 'D', 'B', 'A' }, 115.0)]
+        public void It_should_return_expected_value(char[] items, double expected)
+        {
+            Array.ForEach(items, _sut.Scan);
+            double actual = _sut.GetTotal();
+            actual.Should().Be(expected);
         }
     }
 
