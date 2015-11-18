@@ -21,7 +21,7 @@
         [Fact]
         public void It_should_return_expected_value()
         {
-            var sut = new Checkout();
+            var sut = new Checkout(new ItemPrice('A', 50.0));
             sut.Scan(new ItemPrice('A', 50.0));
             double actual = sut.GetTotal();
             actual.Should().Be(50);
@@ -42,7 +42,13 @@
 
     public class Checkout
     {
+        private readonly ItemPrice[] _itemPrices;
         private readonly List<ItemPrice> _items = new List<ItemPrice>();
+
+        public Checkout(params ItemPrice[] itemPrices)
+        {
+            _itemPrices = itemPrices;
+        }
 
         public double GetTotal()
         {
