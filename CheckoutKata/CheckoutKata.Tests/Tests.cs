@@ -56,6 +56,26 @@
         }
     }
 
+    public class When_multiples_of_one_items_is_scanned : IClassFixture<DefaultItemPricingFixture>
+    {
+        private readonly Checkout _sut;
+
+        public When_multiples_of_one_items_is_scanned(DefaultItemPricingFixture fixture)
+        {
+            _sut = fixture.Sut;
+        }
+
+        [Theory]
+        [InlineData(new[] { 'B', 'B' }, 45.0)]
+        [InlineData(new[] { 'A', 'A', 'A' }, 130.0)]
+        public void It_should_return_promotional_value(char[] items, double expected)
+        {
+            Array.ForEach(items, _sut.Scan);
+            double actual = _sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
+
     public class ItemPrice
     {
         public ItemPrice(char item, double unitPrice)
