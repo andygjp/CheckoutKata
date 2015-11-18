@@ -22,7 +22,7 @@
             var sut = new Checkout();
             sut.Scan(new Item('A', 50.0));
             double actual = sut.GetTotal();
-            actual.Should().Be(0);
+            actual.Should().Be(50);
         }
     }
 
