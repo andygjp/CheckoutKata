@@ -1,5 +1,7 @@
 ﻿namespace CheckoutKata.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using Xunit;
 
@@ -40,14 +42,16 @@
 
     public class Checkout
     {
+        private readonly List<Item> _items = new List<Item>();
+
         public double GetTotal()
         {
-            return 0;
+            return _items.Sum(x => x.Price);
         }
 
         public void Scan(Item item)
         {
-            throw new System.NotImplementedException();
+            _items.Add(item);
         }
     }
 }
