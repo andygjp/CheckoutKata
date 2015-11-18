@@ -22,7 +22,7 @@
         public void It_should_return_expected_value()
         {
             var sut = new Checkout(new ItemPrice('A', 50.0));
-            sut.Scan(new ItemPrice('A', 50.0));
+            sut.Scan('A');
             double actual = sut.GetTotal();
             actual.Should().Be(50);
         }
@@ -58,6 +58,11 @@
         public void Scan(ItemPrice itemPrice)
         {
             _items.Add(itemPrice);
+        }
+
+        public void Scan(char item)
+        {
+            Scan(_itemPrices.Single(x => x.Item == item));
         }
     }
 }
