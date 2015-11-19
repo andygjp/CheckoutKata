@@ -33,7 +33,7 @@
     {
         // Return a new instance
         public Checkout Sut =>
-                new Checkout(new ItemPrice('A', 50.0, new GetXForY(3, 130.0)), new ItemPrice('B', 30, new GetXForY(2, 45.0)), new ItemPrice('C', 20.0), new ItemPrice('D', 15.0));
+                new Checkout(new ItemPrice('A', 50.0, new GetXForY(3, 130.0)), new ItemPrice('B', 30, new GetXForY(2, 45.0)), new NormalPriceProxy('C', 20.0), new NormalPriceProxy('D', 15.0));
     }
 
     public class When_multiple_items_are_scanned : IClassFixture<DefaultItemPricingFixture>
@@ -148,6 +148,21 @@
         public NormalPriceProxy(char item, double unitPrice) : base(item, unitPrice)
         {
             _obj = new ItemPrice(item, unitPrice);
+        }
+
+        public override double SubTotal(int numberOfUnits)
+        {
+            return _obj.SubTotal(numberOfUnits);
+        }
+    }
+
+    public class GetXForYProxy : SubTotalCalculator
+    {
+        private readonly ItemPrice _obj;
+
+        public GetXForYProxy(char item, double unitPrice, IPromotion promotion) : base(item, unitPrice)
+        {
+            _obj = new ItemPrice(item, unitPrice, promotion);
         }
 
         public override double SubTotal(int numberOfUnits)
