@@ -107,8 +107,10 @@
             {
                 return 0;
             }
-            numberOfUnits = 0;
-            return _y;
+
+            int x = numberOfUnits/_x;
+            numberOfUnits = numberOfUnits%_x;
+            return _y*x;
         }
     }
 
