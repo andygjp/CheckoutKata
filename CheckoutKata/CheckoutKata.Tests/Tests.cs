@@ -169,34 +169,27 @@
 
     public class Checkout
     {
-        private readonly Dictionary<char, SubTotalCalculator> _itemPrices;
-        private readonly List<SubTotalCalculator> _items = new List<SubTotalCalculator>();
-        private Dictionary<char, UnitTally> _unitTallies;
+        private readonly Dictionary<char, UnitTally> _unitTallies;
 
         public Checkout(params SubTotalCalculator[] itemPrices)
         {
-            _itemPrices = itemPrices.ToDictionary(x => x.Item);
             _unitTallies = itemPrices.ToDictionary(x => x.Item, x => new UnitTally(x));
         }
 
         public double GetTotal()
         {
-            return _items.GroupBy(x => x.Item).Select(x => _itemPrices[x.Key].SubTotal(x.Count())).Sum();
-        }
-
-        private void Scan(SubTotalCalculator itemPrice)
-        {
-            _items.Add(itemPrice);
+            return _unitTallies.Values.Sum(x => x.SubTotal());
         }
 
         public void Scan(char item)
         {
-            Scan(FindItemPrice(item));
+            var tally = FindTally(item);
+            tally.AddAnotherUnit();
         }
 
-        private SubTotalCalculator FindItemPrice(char item)
+        private UnitTally FindTally(char item)
         {
-            return _itemPrices[item];
+            return _unitTallies[item];
         }
 
         private class UnitTally
