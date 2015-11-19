@@ -143,7 +143,12 @@
         {
             int x = numberOfUnits/_x;
             double price = _y*x;
-            return new PromotionResult(price, numberOfUnits % _x);
+            return new PromotionResult(price, GetNumberOfNonPromotionUnits(numberOfUnits));
+        }
+
+        private int GetNumberOfNonPromotionUnits(int numberOfUnits)
+        {
+            return numberOfUnits % _x;
         }
 
         private class PromotionResult
