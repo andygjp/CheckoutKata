@@ -130,10 +130,14 @@
 
     public class GetXForYProxy : SubTotalCalculator
     {
+        private readonly int _x;
+        private readonly double _y;
         private readonly GetXForY _promotion;
 
         public GetXForYProxy(char item, double unitPrice, int x, double y) : this(item, unitPrice, new GetXForY(x, y))
         {
+            _x = x;
+            _y = y;
         }
 
         private GetXForYProxy(char item, double unitPrice, GetXForY promotion) : base(item, unitPrice)
@@ -158,11 +162,11 @@
         {
             int numberOfUnits1 = numberOfUnits;
             var price = 0.0;
-            if (numberOfUnits1 >= _promotion._x)
+            if (numberOfUnits1 >= _x)
             {
-                int x = numberOfUnits1 /_promotion._x;
-                numberOfUnits1 = numberOfUnits1 %_promotion._x;
-                price = _promotion._y * x;
+                int x = numberOfUnits1 /_x;
+                numberOfUnits1 = numberOfUnits1 %_x;
+                price = _y * x;
             }
             return new PromotionResult(price, numberOfUnits1);
         }
