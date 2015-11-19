@@ -1,8 +1,6 @@
 ﻿namespace CheckoutKata.Tests
 {
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using FluentAssertions;
     using Xunit;
     using Xunit.Abstractions;
@@ -161,85 +159,4 @@
             actual.Should().Be(expected);
         }
     }
-
-    public class Item
-    {
-        public Item(int price)
-        {
-            Price = price;
-        }
-
-        protected int Price { get; }
-        protected int Scanned { get; private set; }
-
-        public virtual int SubTotal()
-        {
-            return Price*Scanned;
-        }
-
-        public void Scan()
-        {
-            Scanned++;
-        }
-    }
-
-    public class BuyXForYItem : Item
-    {
-        private readonly int _x;
-        private readonly int _promotion;
-        
-        public BuyXForYItem(int price, int x, int promotion) : base(price)
-        {
-            _x = x;
-            _promotion = promotion;
-        }
-
-        public override int SubTotal()
-        {
-            return GetPromotionalPrice() + GetNonPromotionalPrice();
-        }
-
-        private int GetNonPromotionalPrice()
-        {
-            return Scanned%_x*Price;
-        }
-
-        private int GetPromotionalPrice()
-        {
-            return Scanned/_x*_promotion;
-        }
-    }
-
-    public class Checkout
-    {
-        private readonly IDictionary<char, Item> _items;
-
-        public Checkout()
-        {
-            _items = new Dictionary<char, Item>
-            {
-                ['A'] = new BuyXForYItem(50, 3, 130),
-                ['B'] = new BuyXForYItem(30, 2, 45),
-                ['C'] = new Item(20),
-                ['D'] = new Item(15)
-            };
-        }
-
-        public Checkout(IDictionary<char, Item> items)
-        {
-            _items = items;
-        }
-
-        public double GetTotal()
-        {
-            return _items.Values.Sum(x => x.SubTotal());
-        }
-
-        public void Scan(char item)
-        {
-            _items[item].Scan();
-        }
-    }
-
-    
 }
