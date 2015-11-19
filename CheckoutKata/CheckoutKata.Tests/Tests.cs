@@ -132,17 +132,15 @@
     {
         private readonly int _x;
         private readonly double _y;
-        private readonly GetXForY _promotion;
 
-        public GetXForYProxy(char item, double unitPrice, int x, double y) : this(item, unitPrice, new GetXForY(x, y))
+        public GetXForYProxy(char item, double unitPrice, int x, double y) : this(item, unitPrice)
         {
             _x = x;
             _y = y;
         }
 
-        private GetXForYProxy(char item, double unitPrice, GetXForY promotion) : base(item, unitPrice)
+        private GetXForYProxy(char item, double unitPrice) : base(item, unitPrice)
         {
-            _promotion = promotion;
         }
 
         public override double SubTotal(int numberOfUnits)
@@ -169,18 +167,6 @@
                 price = _y * x;
             }
             return new PromotionResult(price, numberOfUnits1);
-        }
-
-        private class GetXForY
-        {
-            public readonly int _x;
-            public readonly double _y;
-
-            public GetXForY(int x, double y)
-            {
-                _x = x;
-                _y = y;
-            }
         }
     }
 
