@@ -1,9 +1,11 @@
 ﻿namespace CheckoutKata.Tests
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using FluentAssertions;
     using Xunit;
+    using Xunit.Abstractions;
 
     public class When_no_items_are_scanned
     {
@@ -117,6 +119,45 @@
                 sut.Scan(item);
             }
             double actual = sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
+    
+    public class When_I_scan_incrementally
+    {
+        private readonly Checkout _sut = new Checkout();
+        private readonly ITestOutputHelper _output;
+
+        public When_I_scan_incrementally(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
+        // Using theory doesn't allow me to control order the individual tests are run,
+        // leaving me with having to do several asserts in a test.
+        [Fact]
+        public void It_should_totup_correctly()
+        {
+            _sut.Scan('A');
+            OutputAndAssert(50);
+
+            _sut.Scan('B');
+            OutputAndAssert(80);
+
+            _sut.Scan('A');
+            OutputAndAssert(130);
+
+            _sut.Scan('A');
+            OutputAndAssert(160);
+
+            _sut.Scan('B');
+            OutputAndAssert(175);
+        }
+
+        private void OutputAndAssert(int expected)
+        {
+            var actual = _sut.GetTotal();
+            _output.WriteLine(actual.ToString(CultureInfo.InvariantCulture));
             actual.Should().Be(expected);
         }
     }
