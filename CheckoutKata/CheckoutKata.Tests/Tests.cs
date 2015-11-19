@@ -132,14 +132,6 @@
             var promotionalPrice = GetPromotionalPrice(numberOfUnits);
             double subTotal = promotionalPrice.Price + base.SubTotal(promotionalPrice.NumberOfNonPromotionUnits);
             return subTotal;
-            int unitCount = 0;
-
-            while (unitCount < promotionalPrice.NumberOfNonPromotionUnits)
-            {
-                subTotal += UnitPrice;
-                unitCount++;
-            }
-            return subTotal;
         }
 
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
