@@ -66,7 +66,13 @@
     public class Checkout
     {
         private int _total;
-        private readonly Dictionary<char, Item> _items = new Dictionary<char, Item> {['A'] = new Item(50), ['x'] = new Item(30)};
+        private readonly Dictionary<char, Item> _items = new Dictionary<char, Item>
+        {
+            ['A'] = new Item(50),
+            ['B'] = new Item(30),
+            ['C'] = new Item(20),
+            ['D'] = new Item(15)
+        };
         
         public double GetTotal()
         {
@@ -75,7 +81,7 @@
 
         public void Scan(char item)
         {
-            _total = GetPrice(item == 'A' ? item : 'x');
+            _total = GetPrice(item);
         }
 
         private int GetPrice(char item)
