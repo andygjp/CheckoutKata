@@ -142,9 +142,8 @@
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
             int x = numberOfUnits/_x;
-            numberOfUnits = numberOfUnits%_x;
             double price = _y*x;
-            return new PromotionResult(price, numberOfUnits);
+            return new PromotionResult(price, numberOfUnits % _x);
         }
 
         private class PromotionResult
