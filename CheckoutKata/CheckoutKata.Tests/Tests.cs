@@ -18,7 +18,7 @@
     {
         public double GetTotal()
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
     }
 }
