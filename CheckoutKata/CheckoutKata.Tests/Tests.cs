@@ -104,18 +104,15 @@
 
         public PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
-            PromotionResult promotionalPrice;
             var price = 0.0;
             if (numberOfUnits < _x)
             {
-                promotionalPrice = new PromotionResult(price, numberOfUnits);
             }
             else
             {
                 int x = numberOfUnits/_x;
                 numberOfUnits = numberOfUnits%_x;
                 price = _y*x;
-                promotionalPrice = new PromotionResult(price, numberOfUnits);
             }
             return new PromotionResult(price, numberOfUnits);
         }
