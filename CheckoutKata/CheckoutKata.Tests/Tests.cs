@@ -38,9 +38,15 @@
         }
     }
 
+    public class Item
+    {
+        public int Price => 50;
+    }
+
     public class Checkout
     {
         private int _total;
+        private readonly Item _a = new Item();
 
         public double GetTotal()
         {
@@ -67,7 +73,7 @@
 
         private int GetAUnitPrice()
         {
-            return 50;
+            return _a.Price;
         }
     }
 }
