@@ -117,7 +117,7 @@
                 price = _y*x;
                 promotionalPrice = new PromotionResult(price, numberOfUnits);
             }
-            return promotionalPrice;
+            return new PromotionResult(price, numberOfUnits);
         }
     }
 
