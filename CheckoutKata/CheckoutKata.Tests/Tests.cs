@@ -141,6 +141,21 @@
         public abstract double SubTotal(int numberOfUnits);
     }
 
+    public class NormalPriceProxy : SubTotalCalculator
+    {
+        private readonly ItemPrice _obj;
+
+        public NormalPriceProxy(char item, double unitPrice) : base(item, unitPrice)
+        {
+            _obj = new ItemPrice(item, unitPrice);
+        }
+
+        public override double SubTotal(int numberOfUnits)
+        {
+            return _obj.SubTotal(numberOfUnits);
+        }
+    }
+
     public class ItemPrice : SubTotalCalculator
     {
         private readonly IPromotion _promotion = new NormalPrice();
