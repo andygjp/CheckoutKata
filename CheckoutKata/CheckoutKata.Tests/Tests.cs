@@ -53,7 +53,7 @@
     {
         private int _total;
         private readonly Dictionary<char, Item> _items = new Dictionary<char, Item> {['A'] = new Item(50), ['x'] = new Item(30)};
-
+        
         public double GetTotal()
         {
             return _total;
@@ -61,15 +61,7 @@
 
         public void Scan(char item)
         {
-            switch (item)
-            {
-                case 'A':
-                    _total = GetPrice(item);
-                    break;
-                default:
-                    _total = GetPrice('x');
-                    break;
-            }
+            _total = GetPrice(item == 'A' ? item : 'x');
         }
 
         private int GetPrice(char item)
