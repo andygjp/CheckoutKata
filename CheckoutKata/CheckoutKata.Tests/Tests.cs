@@ -22,7 +22,7 @@
         [Fact]
         public void It_should_return_expected_value()
         {
-            var sut = new Checkout(new NormalPriceProxy('A', 50.0));
+            var sut = new Checkout(new NormalPrice('A', 50.0));
             sut.Scan('A');
             double actual = sut.GetTotal();
             actual.Should().Be(50);
@@ -33,7 +33,7 @@
     {
         // Return a new instance
         public Checkout Sut =>
-                new Checkout(new GetXForYProxy('A', 50.0, 3, 130.0), new GetXForYProxy('B', 30, 2, 45.0), new NormalPriceProxy('C', 20.0), new NormalPriceProxy('D', 15.0));
+                new Checkout(new GetXForYProxy('A', 50.0, 3, 130.0), new GetXForYProxy('B', 30, 2, 45.0), new NormalPrice('C', 20.0), new NormalPrice('D', 15.0));
     }
 
     public class When_multiple_items_are_scanned : IClassFixture<DefaultItemPricingFixture>
@@ -128,22 +128,15 @@
         public abstract double SubTotal(int numberOfUnits);
     }
 
-    public class NormalPriceProxy : SubTotalCalculator
+    public class NormalPrice : SubTotalCalculator
     {
-        public NormalPriceProxy(char item, double unitPrice) : base(item, unitPrice)
+        public NormalPrice(char item, double unitPrice) : base(item, unitPrice)
         {
         }
 
         public override double SubTotal(int numberOfUnits)
         {
-            double subTotal = 0;
-            int unitCount = 0;
-            while (unitCount < numberOfUnits)
-            {
-                subTotal += UnitPrice;
-                unitCount++;
-            }
-            return subTotal;
+            return UnitPrice*numberOfUnits;
         }
     }
 
