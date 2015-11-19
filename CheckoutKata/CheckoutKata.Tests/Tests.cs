@@ -66,7 +66,7 @@
     public class Checkout
     {
         private int _total;
-        private readonly Dictionary<char, Item> _items;
+        private readonly IDictionary<char, Item> _items;
 
         public Checkout()
         {
@@ -77,6 +77,11 @@
                 ['C'] = new Item(20),
                 ['D'] = new Item(15)
             };
+        }
+
+        public Checkout(IDictionary<char, Item> items)
+        {
+            _items = items;
         }
 
         public double GetTotal()
