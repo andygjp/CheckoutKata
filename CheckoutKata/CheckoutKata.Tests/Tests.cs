@@ -39,6 +39,20 @@
         }
     }
 
+    public class When_I_scan_in_item_different_item
+    {
+        [Theory]
+        [InlineData('C', 20)]
+        [InlineData('D', 15)]
+        public void It_should_return_expectation(char item, int expected)
+        {
+            var sut = new Checkout();
+            sut.Scan(item);
+            double actual = sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
+
     public class Item
     {
         public Item(int price)
