@@ -104,7 +104,7 @@
 
         public void Scan(char item)
         {
-            _total = GetPrice(item);
+            _total += GetPrice(item);
         }
 
         private int GetPrice(char item)
