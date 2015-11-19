@@ -101,22 +101,49 @@
 
     public class Item
     {
-        private readonly int _price;
-        private int _scanned;
-
         public Item(int price)
         {
-            _price = price;
+            Price = price;
         }
 
-        public int SubTotal()
+        protected int Price { get; }
+        protected int Scanned { get; private set; }
+
+        public virtual int SubTotal()
         {
-            return _price*_scanned;
+            return Price*Scanned;
         }
 
         public void Scan()
         {
-            _scanned++;
+            Scanned++;
+        }
+    }
+
+    public class BuyXForYItem : Item
+    {
+        private readonly int _x;
+        private readonly int _promotion;
+        
+        public BuyXForYItem(int price, int x, int promotion) : base(price)
+        {
+            _x = x;
+            _promotion = promotion;
+        }
+
+        public override int SubTotal()
+        {
+            return GetPromotionalPrice() + GetNonPromotionalPrice();
+        }
+
+        private int GetNonPromotionalPrice()
+        {
+            return Scanned%_x*Price;
+        }
+
+        private int GetPromotionalPrice()
+        {
+            return Scanned/_x*_promotion;
         }
     }
 
@@ -128,8 +155,8 @@
         {
             _items = new Dictionary<char, Item>
             {
-                ['A'] = new Item(50),
-                ['B'] = new Item(30),
+                ['A'] = new BuyXForYItem(50, 3, 130),
+                ['B'] = new BuyXForYItem(30, 2, 45),
                 ['C'] = new Item(20),
                 ['D'] = new Item(15)
             };
