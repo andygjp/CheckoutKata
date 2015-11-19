@@ -81,6 +81,7 @@
         [Theory]
         [InlineData(2, 100.0)]
         [InlineData(3, 130.0)]
+        [InlineData(5, 230.0)]
         public void It_should_calculate_correct_price(int numberOfUnits, double expected)
         {
             var sut = new ItemPrice('A', 50.0, new GetXForY(3, 130.0));
