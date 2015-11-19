@@ -81,6 +81,22 @@
         }
     }
 
+    public class When_I_scan_in_item_A_multiple_time
+    {
+        [Theory]
+        [InlineData(2, 100)]
+        public void It_should_return_expectation(int numberOfScans, int expected)
+        {
+            var sut = new Checkout();
+            for (int i = 0; i < numberOfScans; i++)
+            {
+                sut.Scan('A');
+            }
+            double actual = sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
+
     public class Item
     {
         public Item(int price)
