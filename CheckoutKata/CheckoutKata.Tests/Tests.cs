@@ -106,12 +106,18 @@
         {
             if (numberOfUnits < _x)
             {
-                return new PromotionResult(0.0, numberOfUnits);
+                PromotionResult promotionalPrice;
+                promotionalPrice = new PromotionResult(0.0, numberOfUnits);
+                return promotionalPrice;
             }
-
-            int x = numberOfUnits/_x;
-            numberOfUnits = numberOfUnits%_x;
-            return new PromotionResult(_y*x, numberOfUnits);
+            else
+            {
+                int x = numberOfUnits/_x;
+                numberOfUnits = numberOfUnits%_x;
+                PromotionResult promotionalPrice;
+                promotionalPrice = new PromotionResult(_y*x, numberOfUnits);
+                return promotionalPrice;
+            }
         }
     }
 
