@@ -152,22 +152,40 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            return _obj.SubTotal2(numberOfUnits);
+            int numberOfUnits1 = numberOfUnits;
+            double subTotal = 0;
+            int unitCount = 0;
+            while (unitCount < numberOfUnits1)
+            {
+                subTotal += _obj.UnitPrice;
+                unitCount++;
+            }
+            return subTotal;
         }
     }
 
     public class GetXForYProxy : SubTotalCalculator
     {
+        private readonly IPromotion _promotion;
         private readonly ItemPrice _obj;
 
         public GetXForYProxy(char item, double unitPrice, IPromotion promotion) : base(item, unitPrice)
         {
+            _promotion = promotion;
             _obj = new ItemPrice(item, unitPrice, promotion);
         }
 
         public override double SubTotal(int numberOfUnits)
         {
-            return _obj.SubTotal2(numberOfUnits);
+            int numberOfUnits1 = numberOfUnits;
+            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits1);
+            int unitCount = 0;
+            while (unitCount < numberOfUnits1)
+            {
+                subTotal += _obj.UnitPrice;
+                unitCount++;
+            }
+            return subTotal;
         }
     }
 
@@ -186,14 +204,10 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            return SubTotal2(numberOfUnits);
-        }
-
-        public double SubTotal2(int numberOfUnits)
-        {
-            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
+            int numberOfUnits1 = numberOfUnits;
+            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits1);
             int unitCount = 0;
-            while (unitCount < numberOfUnits)
+            while (unitCount < numberOfUnits1)
             {
                 subTotal += UnitPrice;
                 unitCount++;
