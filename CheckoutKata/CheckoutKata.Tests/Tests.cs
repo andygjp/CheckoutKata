@@ -129,14 +129,18 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            return GetPromotionalSubTotal(numberOfUnits) + base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
+            return GetPromotionalSubTotal(numberOfUnits) + GetNonPromotionalSubTotal(numberOfUnits);
         }
 
         private double GetPromotionalSubTotal(int numberOfUnits)
         {
             int x = numberOfUnits/_x;
-            double price = _y*x;
-            return price;
+            return _y*x;
+        }
+
+        private double GetNonPromotionalSubTotal(int numberOfUnits)
+        {
+            return base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
         }
 
         private int GetNumberOfNonPromotionUnits(int numberOfUnits)
