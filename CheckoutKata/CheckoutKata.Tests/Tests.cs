@@ -116,7 +116,7 @@
         }
     }
 
-    public class GetXForY : SubTotalCalculator
+    public class GetXForY : NormalPrice
     {
         private readonly int _x;
         private readonly double _y;
@@ -130,8 +130,10 @@
         public override double SubTotal(int numberOfUnits)
         {
             var promotionalPrice = GetPromotionalPrice(numberOfUnits);
-            double subTotal = promotionalPrice.Price;
+            double subTotal = promotionalPrice.Price + base.SubTotal(promotionalPrice.NumberOfNonPromotionUnits);
+            return subTotal;
             int unitCount = 0;
+
             while (unitCount < promotionalPrice.NumberOfNonPromotionUnits)
             {
                 subTotal += UnitPrice;
