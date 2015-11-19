@@ -26,6 +26,18 @@
         }
     }
 
+    public class When_I_scan_in_item_B
+    {
+        [Fact]
+        public void It_should_return_thirty()
+        {
+            var sut = new Checkout();
+            sut.Scan('B');
+            double actual = sut.GetTotal();
+            actual.Should().Be(30);
+        }
+    }
+
     public class Checkout
     {
         private int _total;
