@@ -49,7 +49,15 @@
 
         public void Scan(char item)
         {
-            _total = 50;
+            switch (item)
+            {
+                case 'A':
+                    _total = 50;
+                    break;
+                default:
+                    _total = 30;
+                    break;
+            }
         }
     }
 }
