@@ -40,7 +40,7 @@
 
     public class Item
     {
-        public int Price => 50;
+        public int Price { get; } = 50;
     }
 
     public class Checkout
