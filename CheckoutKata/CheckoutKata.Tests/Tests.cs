@@ -100,15 +100,19 @@
             _y = y;
         }
 
-        public double GetPromotionalFactor(int numberOfUnits)
+        public double GetPromotionalPrice(ref int numberOfUnits)
         {
+            if (numberOfUnits < _x)
+            {
+                return 0;
+            }
             return 1;
         }
     }
 
     public interface IPromotion
     {
-        double GetPromotionalFactor(int numberOfUnits);
+        double GetPromotionalPrice(ref int numberOfUnits);
     }
 
     public class ItemPrice
@@ -137,8 +141,6 @@
             {
                 subTotal += UnitPrice;
                 unitCount++;
-                var factor = _promotion.GetPromotionalFactor(unitCount);
-                subTotal *= factor;
             }
             return subTotal;
         }
