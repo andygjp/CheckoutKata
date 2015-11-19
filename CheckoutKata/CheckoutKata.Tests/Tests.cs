@@ -1,6 +1,7 @@
 ﻿namespace CheckoutKata.Tests
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using Xunit;
 
@@ -101,6 +102,7 @@
     public class Item
     {
         private readonly int _price;
+        private int _scanned;
 
         public Item(int price)
         {
@@ -109,12 +111,12 @@
 
         public int SubTotal()
         {
-            return _price;
+            return _price*_scanned;
         }
 
         public void Scan()
         {
-            
+            _scanned++;
         }
     }
 
@@ -141,7 +143,7 @@
 
         public double GetTotal()
         {
-            return _total;
+            return _items.Values.Sum(x => x.SubTotal());
         }
 
         public void Scan(char item)
