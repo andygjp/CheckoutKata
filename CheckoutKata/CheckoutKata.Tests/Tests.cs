@@ -170,7 +170,7 @@
 
         public double GetTotal()
         {
-            return _items.Sum(x => x.UnitPrice);
+            return _items.GroupBy(x => x.Item).Select(x => _itemPrices[x.Key].SubTotal(x.Count())).Sum();
         }
 
         private void Scan(ItemPrice itemPrice)
