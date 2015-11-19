@@ -133,14 +133,10 @@
         private readonly int _x;
         private readonly double _y;
 
-        public GetXForYProxy(char item, double unitPrice, int x, double y) : this(item, unitPrice)
+        public GetXForYProxy(char item, double unitPrice, int x, double y) : base(item, unitPrice)
         {
             _x = x;
             _y = y;
-        }
-
-        private GetXForYProxy(char item, double unitPrice) : base(item, unitPrice)
-        {
         }
 
         public override double SubTotal(int numberOfUnits)
