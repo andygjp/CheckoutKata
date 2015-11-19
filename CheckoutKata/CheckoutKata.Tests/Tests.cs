@@ -91,7 +91,7 @@
         }
     }
 
-    public class GetXForY : IPromotion
+    public class GetXForY
     {
         private readonly int _x;
         private readonly double _y;
@@ -113,11 +113,6 @@
             numberOfUnits = numberOfUnits%_x;
             return _y*x;
         }
-    }
-
-    public interface IPromotion
-    {
-        double GetPromotionalPrice(ref int numberOfUnits);
     }
     
     public abstract class SubTotalCalculator
@@ -154,9 +149,9 @@
 
     public class GetXForYProxy : SubTotalCalculator
     {
-        private readonly IPromotion _promotion;
+        private readonly GetXForY _promotion;
 
-        public GetXForYProxy(char item, double unitPrice, IPromotion promotion) : base(item, unitPrice)
+        public GetXForYProxy(char item, double unitPrice, GetXForY promotion) : base(item, unitPrice)
         {
             _promotion = promotion;
         }
