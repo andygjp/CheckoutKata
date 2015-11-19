@@ -22,7 +22,7 @@
         [Fact]
         public void It_should_return_expected_value()
         {
-            var sut = new Checkout(new ItemPrice('A', 50.0));
+            var sut = new Checkout(new NormalPriceProxy('A', 50.0));
             sut.Scan('A');
             double actual = sut.GetTotal();
             actual.Should().Be(50);
@@ -85,7 +85,7 @@
         [InlineData(5, 230.0)]
         public void It_should_calculate_correct_price(int numberOfUnits, double expected)
         {
-            var sut = new ItemPrice('A', 50.0, new GetXForY(3, 130.0));
+            var sut = new GetXForYProxy('A', 50.0, new GetXForY(3, 130.0));
             double actual = sut.SubTotal(numberOfUnits);
             actual.Should().Be(expected);
         }
