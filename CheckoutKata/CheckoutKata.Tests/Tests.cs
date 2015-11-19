@@ -66,6 +66,21 @@
         }
     }
 
+    public class When_I_scan_in_one_of_each_item
+    {
+        [Fact]
+        public void It_should_sum_the_items()
+        {
+            var sut = new Checkout();
+            sut.Scan('C');
+            sut.Scan('D');
+            sut.Scan('A');
+            sut.Scan('B');
+            double actual = sut.GetTotal();
+            actual.Should().Be(115);
+        }
+    }
+
     public class Item
     {
         public Item(int price)
