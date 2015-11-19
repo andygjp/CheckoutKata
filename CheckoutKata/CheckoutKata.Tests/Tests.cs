@@ -102,17 +102,29 @@
             _y = y;
         }
 
-        public double GetPromotionalPrice(ref int numberOfUnits)
+        public PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
             if (numberOfUnits < _x)
             {
-                return 0;
+                return new PromotionResult(0.0, numberOfUnits);
             }
 
             int x = numberOfUnits/_x;
             numberOfUnits = numberOfUnits%_x;
-            return _y*x;
+            return new PromotionResult(_y*x, numberOfUnits);
         }
+    }
+
+    public class PromotionResult
+    {
+        public PromotionResult(double price, int numberOfNonPromotionUnits)
+        {
+            Price = price;
+            NumberOfNonPromotionUnits = numberOfNonPromotionUnits;
+        }
+
+        public double Price { get; }
+        public int NumberOfNonPromotionUnits { get; }
     }
     
     public abstract class SubTotalCalculator
@@ -155,9 +167,10 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
+            var promotionalPrice = _promotion.GetPromotionalPrice(numberOfUnits);
+            double subTotal = promotionalPrice.Price;
             int unitCount = 0;
-            while (unitCount < numberOfUnits)
+            while (unitCount < promotionalPrice.NumberOfNonPromotionUnits)
             {
                 subTotal += UnitPrice;
                 unitCount++;
