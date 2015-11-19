@@ -85,6 +85,7 @@
     {
         [Theory]
         [InlineData(2, 100)]
+        [InlineData(3, 130)]
         public void It_should_return_expectation(int numberOfScans, int expected)
         {
             var sut = new Checkout();
