@@ -52,12 +52,22 @@
             switch (item)
             {
                 case 'A':
-                    _total = 50;
+                    _total = GetAUnitPrice();
                     break;
                 default:
-                    _total = 30;
+                    _total = GetOtherUnitPrice();
                     break;
             }
+        }
+
+        private int GetOtherUnitPrice()
+        {
+            return 30;
+        }
+
+        private int GetAUnitPrice()
+        {
+            return 50;
         }
     }
 }
