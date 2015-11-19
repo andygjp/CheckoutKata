@@ -136,13 +136,9 @@
 
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
-            var price = 0.0;
-            if (numberOfUnits >= _x)
-            {
-                int x = numberOfUnits /_x;
-                numberOfUnits = numberOfUnits %_x;
-                price = _y * x;
-            }
+            int x = numberOfUnits/_x;
+            numberOfUnits = numberOfUnits%_x;
+            double price = _y*x;
             return new PromotionResult(price, numberOfUnits);
         }
 
