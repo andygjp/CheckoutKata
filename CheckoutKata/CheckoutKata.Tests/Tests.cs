@@ -39,7 +39,7 @@
         }
     }
 
-    public class When_I_scan_in_item_different_item
+    public class When_I_scan_in_different_items
     {
         [Theory]
         [InlineData('C', 20)]
@@ -53,7 +53,7 @@
         }
     }
 
-    public class When_I_scan_in_two_items
+    public class When_I_scan_in_two_different_items
     {
         [Fact]
         public void It_should_sum_the_items()
