@@ -105,15 +105,17 @@
         public PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
             PromotionResult promotionalPrice;
+            var price = 0.0;
             if (numberOfUnits < _x)
             {
-                promotionalPrice = new PromotionResult(0.0, numberOfUnits);
+                promotionalPrice = new PromotionResult(price, numberOfUnits);
             }
             else
             {
                 int x = numberOfUnits/_x;
                 numberOfUnits = numberOfUnits%_x;
-                promotionalPrice = new PromotionResult(_y*x, numberOfUnits);
+                price = _y*x;
+                promotionalPrice = new PromotionResult(price, numberOfUnits);
             }
             return promotionalPrice;
         }
@@ -171,7 +173,7 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            var promotionalPrice = _promotion.GetPromotionalPrice(numberOfUnits);
+            var promotionalPrice = GetPromotionalPrice(numberOfUnits);
             double subTotal = promotionalPrice.Price;
             int unitCount = 0;
             while (unitCount < promotionalPrice.NumberOfNonPromotionUnits)
@@ -180,6 +182,11 @@
                 unitCount++;
             }
             return subTotal;
+        }
+
+        private PromotionResult GetPromotionalPrice(int numberOfUnits)
+        {
+            return _promotion.GetPromotionalPrice(numberOfUnits);
         }
     }
 
