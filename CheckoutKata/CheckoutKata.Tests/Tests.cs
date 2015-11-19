@@ -105,10 +105,7 @@
         public PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
             var price = 0.0;
-            if (numberOfUnits < _x)
-            {
-            }
-            else
+            if (numberOfUnits >= _x)
             {
                 int x = numberOfUnits/_x;
                 numberOfUnits = numberOfUnits%_x;
