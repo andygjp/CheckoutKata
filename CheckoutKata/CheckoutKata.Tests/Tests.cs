@@ -106,7 +106,8 @@
             {
                 return 0;
             }
-            return 1;
+            numberOfUnits = 0;
+            return _y;
         }
     }
 
