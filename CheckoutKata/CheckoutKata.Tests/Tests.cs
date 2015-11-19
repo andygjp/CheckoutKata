@@ -90,18 +90,6 @@
             actual.Should().Be(expected);
         }
     }
-
-    public class PromotionResult
-    {
-        public PromotionResult(double price, int numberOfNonPromotionUnits)
-        {
-            Price = price;
-            NumberOfNonPromotionUnits = numberOfNonPromotionUnits;
-        }
-
-        public double Price { get; }
-        public int NumberOfNonPromotionUnits { get; }
-    }
     
     public abstract class SubTotalCalculator
     {
@@ -154,15 +142,26 @@
 
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
-            int numberOfUnits1 = numberOfUnits;
             var price = 0.0;
-            if (numberOfUnits1 >= _x)
+            if (numberOfUnits >= _x)
             {
-                int x = numberOfUnits1 /_x;
-                numberOfUnits1 = numberOfUnits1 %_x;
+                int x = numberOfUnits /_x;
+                numberOfUnits = numberOfUnits %_x;
                 price = _y * x;
             }
-            return new PromotionResult(price, numberOfUnits1);
+            return new PromotionResult(price, numberOfUnits);
+        }
+
+        private class PromotionResult
+        {
+            public PromotionResult(double price, int numberOfNonPromotionUnits)
+            {
+                Price = price;
+                NumberOfNonPromotionUnits = numberOfNonPromotionUnits;
+            }
+
+            public double Price { get; }
+            public int NumberOfNonPromotionUnits { get; }
         }
     }
 
