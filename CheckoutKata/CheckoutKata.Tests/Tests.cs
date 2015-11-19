@@ -104,20 +104,18 @@
 
         public PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
+            PromotionResult promotionalPrice;
             if (numberOfUnits < _x)
             {
-                PromotionResult promotionalPrice;
                 promotionalPrice = new PromotionResult(0.0, numberOfUnits);
-                return promotionalPrice;
             }
             else
             {
                 int x = numberOfUnits/_x;
                 numberOfUnits = numberOfUnits%_x;
-                PromotionResult promotionalPrice;
                 promotionalPrice = new PromotionResult(_y*x, numberOfUnits);
-                return promotionalPrice;
             }
+            return promotionalPrice;
         }
     }
 
