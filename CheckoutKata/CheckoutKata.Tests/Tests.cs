@@ -129,20 +129,7 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            var promotionalPrice = GetPromotionalPrice(numberOfUnits);
-            double subTotal = GetPromotionalSubTotal(numberOfUnits) + base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
-            return subTotal;
-        }
-
-        private static double SubTotalCore(PromotionResult promotionalPrice, int numberOfUnits)
-        {
-            return promotionalPrice.Price;
-        }
-
-        private PromotionResult GetPromotionalPrice(int numberOfUnits)
-        {
-            var price = GetPromotionalSubTotal(numberOfUnits);
-            return new PromotionResult(price, 0);
+            return GetPromotionalSubTotal(numberOfUnits) + base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
         }
 
         private double GetPromotionalSubTotal(int numberOfUnits)
@@ -155,18 +142,6 @@
         private int GetNumberOfNonPromotionUnits(int numberOfUnits)
         {
             return numberOfUnits % _x;
-        }
-
-        private class PromotionResult
-        {
-            public PromotionResult(double price, int numberOfNonPromotionUnits)
-            {
-                Price = price;
-                NumberOfNonPromotionUnits = numberOfNonPromotionUnits;
-            }
-
-            public double Price { get; }
-            public int NumberOfNonPromotionUnits { get; }
         }
     }
 
