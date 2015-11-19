@@ -52,6 +52,7 @@
     {
         private int _total;
         private readonly Item _a = new Item(50);
+        private readonly Item _other = new Item(30);
 
         public double GetTotal()
         {
@@ -73,7 +74,7 @@
 
         private int GetOtherUnitPrice()
         {
-            return new Item(30).Price;
+            return _other.Price;
         }
 
         private int GetAUnitPrice()
