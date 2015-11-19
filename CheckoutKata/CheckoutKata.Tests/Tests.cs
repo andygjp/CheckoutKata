@@ -141,9 +141,15 @@
 
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
+            var price = GetPromotionalSubTotal(numberOfUnits);
+            return new PromotionResult(price, 0);
+        }
+
+        private double GetPromotionalSubTotal(int numberOfUnits)
+        {
             int x = numberOfUnits/_x;
             double price = _y*x;
-            return new PromotionResult(price, GetNumberOfNonPromotionUnits(numberOfUnits));
+            return price;
         }
 
         private int GetNumberOfNonPromotionUnits(int numberOfUnits)
