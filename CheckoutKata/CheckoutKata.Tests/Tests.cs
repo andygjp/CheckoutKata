@@ -91,30 +91,6 @@
         }
     }
 
-    public class GetXForY
-    {
-        private readonly int _x;
-        private readonly double _y;
-
-        public GetXForY(int x, double y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public PromotionResult GetPromotionalPrice(int numberOfUnits)
-        {
-            var price = 0.0;
-            if (numberOfUnits >= _x)
-            {
-                int x = numberOfUnits/_x;
-                numberOfUnits = numberOfUnits%_x;
-                price = _y*x;
-            }
-            return new PromotionResult(price, numberOfUnits);
-        }
-    }
-
     public class PromotionResult
     {
         public PromotionResult(double price, int numberOfNonPromotionUnits)
@@ -181,6 +157,30 @@
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
             return _promotion.GetPromotionalPrice(numberOfUnits);
+        }
+
+        private class GetXForY
+        {
+            private readonly int _x;
+            private readonly double _y;
+
+            public GetXForY(int x, double y)
+            {
+                _x = x;
+                _y = y;
+            }
+
+            public PromotionResult GetPromotionalPrice(int numberOfUnits)
+            {
+                var price = 0.0;
+                if (numberOfUnits >= _x)
+                {
+                    int x = numberOfUnits / _x;
+                    numberOfUnits = numberOfUnits % _x;
+                    price = _y * x;
+                }
+                return new PromotionResult(price, numberOfUnits);
+            }
         }
     }
 
