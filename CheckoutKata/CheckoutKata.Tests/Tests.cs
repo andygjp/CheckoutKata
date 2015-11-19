@@ -77,12 +77,12 @@
 
         private int GetOtherUnitPrice()
         {
-            return _other.Price;
+            return _items['x'].Price;
         }
 
         private int GetAUnitPrice()
         {
-            return _a.Price;
+            return _items['A'].Price;
         }
     }
 
