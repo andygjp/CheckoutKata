@@ -67,11 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checkout.cs" />
-    <Compile Include="GetXForY.cs" />
-    <Compile Include="NormalPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubTotalCalculator.cs" />
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckoutKata\CheckoutKata.csproj">
+      <Project>{2fff57b7-b112-4762-a6b0-20f3db648b2a}</Project>
+      <Name>CheckoutKata</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
