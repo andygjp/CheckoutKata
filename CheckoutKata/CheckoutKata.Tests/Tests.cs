@@ -135,7 +135,7 @@
 
         public double SubTotal(int numberOfUnits)
         {
-            double subTotal = 0;
+            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
             int unitCount = 0;
             while (unitCount < numberOfUnits)
             {
