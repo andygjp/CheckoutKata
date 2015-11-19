@@ -67,6 +67,10 @@
         [Theory]
         [InlineData(new[] { 'B', 'B' }, 45.0)]
         [InlineData(new[] { 'A', 'A', 'A' }, 130.0)]
+        [InlineData(new[] { 'A', 'A' }, 100.0)]
+        [InlineData(new[] { 'A', 'A', 'A', 'A' }, 180.0)]
+        [InlineData(new[] { 'A', 'A', 'A', 'A', 'A' }, 230.0)]
+        [InlineData(new[] { 'A', 'A', 'A', 'A', 'A', 'A' }, 260.0)]
         public void It_should_return_promotional_value(char[] items, double expected)
         {
             Array.ForEach(items, _sut.Scan);
