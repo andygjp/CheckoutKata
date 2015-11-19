@@ -64,7 +64,7 @@
             switch (item)
             {
                 case 'A':
-                    _total = GetAUnitPrice(item);
+                    _total = GetPrice(item);
                     break;
                 default:
                     _total = GetOtherUnitPrice();
@@ -77,9 +77,9 @@
             return _items['x'].Price;
         }
 
-        private int GetAUnitPrice(char item)
+        private int GetPrice(char item)
         {
-            return _items['A'].Price;
+            return _items[item].Price;
         }
     }
 
