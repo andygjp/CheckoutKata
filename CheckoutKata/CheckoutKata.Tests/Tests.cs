@@ -73,7 +73,7 @@
 
         private int GetOtherUnitPrice()
         {
-            return 30;
+            return new Item(30).Price;
         }
 
         private int GetAUnitPrice()
