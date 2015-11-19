@@ -171,10 +171,12 @@
     {
         private readonly Dictionary<char, SubTotalCalculator> _itemPrices;
         private readonly List<SubTotalCalculator> _items = new List<SubTotalCalculator>();
+        private Dictionary<char, UnitTally> _unitTallies;
 
         public Checkout(params SubTotalCalculator[] itemPrices)
         {
             _itemPrices = itemPrices.ToDictionary(x => x.Item);
+            _unitTallies = itemPrices.ToDictionary(x => x.Item, x => new UnitTally(x));
         }
 
         public double GetTotal()
@@ -195,6 +197,27 @@
         private SubTotalCalculator FindItemPrice(char item)
         {
             return _itemPrices[item];
+        }
+
+        private class UnitTally
+        {
+            private int _numberOfUnits;
+            private readonly SubTotalCalculator _subTotalCalculator;
+
+            public UnitTally(SubTotalCalculator subTotalCalculator)
+            {
+                _subTotalCalculator = subTotalCalculator;
+            }
+
+            public void AddAnotherUnit()
+            {
+                _numberOfUnits++;
+            }
+
+            public double SubTotal()
+            {
+                return _subTotalCalculator.SubTotal(_numberOfUnits);
+            }
         }
     }
 }
