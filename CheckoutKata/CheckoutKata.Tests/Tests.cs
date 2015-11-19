@@ -67,14 +67,9 @@
                     _total = GetPrice(item);
                     break;
                 default:
-                    _total = GetOtherUnitPrice();
+                    _total = GetPrice('x');
                     break;
             }
-        }
-
-        private int GetOtherUnitPrice()
-        {
-            return _items['x'].Price;
         }
 
         private int GetPrice(char item)
