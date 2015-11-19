@@ -1,8 +1,6 @@
 ﻿namespace CheckoutKata.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using FluentAssertions;
     using Xunit;
 
@@ -88,111 +86,6 @@
             var sut = new GetXForY('A', 50.0, 3, 130.0);
             double actual = sut.SubTotal(numberOfUnits);
             actual.Should().Be(expected);
-        }
-    }
-    
-    public abstract class SubTotalCalculator
-    {
-        protected SubTotalCalculator(char item, double unitPrice)
-        {
-            Item = item;
-            UnitPrice = unitPrice;
-        }
-
-        public char Item { get; }
-        public double UnitPrice { get; }
-        public abstract double SubTotal(int numberOfUnits);
-    }
-
-    public class NormalPrice : SubTotalCalculator
-    {
-        public NormalPrice(char item, double unitPrice) : base(item, unitPrice)
-        {
-        }
-
-        public override double SubTotal(int numberOfUnits)
-        {
-            return UnitPrice*numberOfUnits;
-        }
-    }
-
-    public class GetXForY : NormalPrice
-    {
-        private readonly int _x;
-        private readonly double _y;
-
-        public GetXForY(char item, double unitPrice, int x, double y) : base(item, unitPrice)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public override double SubTotal(int numberOfUnits)
-        {
-            return GetPromotionalSubTotal(numberOfUnits) + GetNonPromotionalSubTotal(numberOfUnits);
-        }
-
-        private double GetPromotionalSubTotal(int numberOfUnits)
-        {
-            int x = numberOfUnits/_x;
-            return _y*x;
-        }
-
-        private double GetNonPromotionalSubTotal(int numberOfUnits)
-        {
-            return base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
-        }
-
-        private int GetNumberOfNonPromotionUnits(int numberOfUnits)
-        {
-            return numberOfUnits % _x;
-        }
-    }
-
-    public class Checkout
-    {
-        private readonly Dictionary<char, UnitTally> _unitTallies;
-
-        public Checkout(params SubTotalCalculator[] itemPrices)
-        {
-            _unitTallies = itemPrices.ToDictionary(x => x.Item, x => new UnitTally(x));
-        }
-
-        public double GetTotal()
-        {
-            return _unitTallies.Values.Sum(x => x.SubTotal());
-        }
-
-        public void Scan(char item)
-        {
-            var tally = FindTally(item);
-            tally.AddAnotherUnit();
-        }
-
-        private UnitTally FindTally(char item)
-        {
-            return _unitTallies[item];
-        }
-
-        private class UnitTally
-        {
-            private int _numberOfUnits;
-            private readonly SubTotalCalculator _subTotalCalculator;
-
-            public UnitTally(SubTotalCalculator subTotalCalculator)
-            {
-                _subTotalCalculator = subTotalCalculator;
-            }
-
-            public void AddAnotherUnit()
-            {
-                _numberOfUnits++;
-            }
-
-            public double SubTotal()
-            {
-                return _subTotalCalculator.SubTotal(_numberOfUnits);
-            }
         }
     }
 }
