@@ -130,7 +130,7 @@
         public override double SubTotal(int numberOfUnits)
         {
             var promotionalPrice = GetPromotionalPrice(numberOfUnits);
-            double subTotal = SubTotalCore(promotionalPrice, numberOfUnits) + base.SubTotal(promotionalPrice.NumberOfNonPromotionUnits);
+            double subTotal = SubTotalCore(promotionalPrice, numberOfUnits) + base.SubTotal(GetNumberOfNonPromotionUnits(numberOfUnits));
             return subTotal;
         }
 
