@@ -33,7 +33,7 @@
     {
         // Return a new instance
         public Checkout Sut =>
-                new Checkout(new GetXForYProxy('A', 50.0, new GetXForY(3, 130.0)), new GetXForYProxy('B', 30, new GetXForY(2, 45.0)), new NormalPriceProxy('C', 20.0), new NormalPriceProxy('D', 15.0));
+                new Checkout(new GetXForYProxy('A', 50.0, 3, 130.0), new GetXForYProxy('B', 30, 2, 45.0), new NormalPriceProxy('C', 20.0), new NormalPriceProxy('D', 15.0));
     }
 
     public class When_multiple_items_are_scanned : IClassFixture<DefaultItemPricingFixture>
@@ -85,7 +85,7 @@
         [InlineData(5, 230.0)]
         public void It_should_calculate_correct_price(int numberOfUnits, double expected)
         {
-            var sut = new GetXForYProxy('A', 50.0, new GetXForY(3, 130.0));
+            var sut = new GetXForYProxy('A', 50.0, 3, 130.0);
             double actual = sut.SubTotal(numberOfUnits);
             actual.Should().Be(expected);
         }
@@ -151,7 +151,11 @@
     {
         private readonly GetXForY _promotion;
 
-        public GetXForYProxy(char item, double unitPrice, GetXForY promotion) : base(item, unitPrice)
+        public GetXForYProxy(char item, double unitPrice, int x, double y) : this(item, unitPrice, new GetXForY(x, y))
+        {
+        }
+
+        private GetXForYProxy(char item, double unitPrice, GetXForY promotion) : base(item, unitPrice)
         {
             _promotion = promotion;
         }
