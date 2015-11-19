@@ -92,4 +92,26 @@
             actual.Should().Be(expected);
         }
     }
+
+    public class When_multiples_of_varying_items_are_scanned : IClassFixture<DefaultItemPricingFixture>
+    {
+        private readonly Checkout _sut;
+
+        public When_multiples_of_varying_items_are_scanned(DefaultItemPricingFixture fixture)
+        {
+            _sut = fixture.Sut;
+        }
+
+        [Theory]
+        [InlineData(new[] { 'A', 'A', 'A', 'B' }, 160.0)]
+        [InlineData(new[] { 'A', 'A', 'A', 'B', 'B' }, 175.0)]
+        [InlineData(new[] { 'A', 'A', 'A', 'B', 'B', 'D' }, 190.0)]
+        [InlineData(new[] { 'D', 'A', 'B', 'A', 'B', 'A' }, 190.0)]
+        public void It_should_return_promotional_value(char[] items, double expected)
+        {
+            Array.ForEach(items, _sut.Scan);
+            double actual = _sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
 }
