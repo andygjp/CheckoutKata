@@ -128,14 +128,25 @@
         }
     }
 
-    public class ItemPrice
+    public abstract class SubTotalCalculator
     {
-        private readonly IPromotion _promotion = new NormalPrice();
-
-        public ItemPrice(char item, double unitPrice)
+        protected SubTotalCalculator(char item, double unitPrice)
         {
             Item = item;
             UnitPrice = unitPrice;
+        }
+
+        public char Item { get; }
+        public double UnitPrice { get; }
+        public abstract double SubTotal(int numberOfUnits);
+    }
+
+    public class ItemPrice : SubTotalCalculator
+    {
+        private readonly IPromotion _promotion = new NormalPrice();
+
+        public ItemPrice(char item, double unitPrice) : base(item, unitPrice)
+        {
         }
 
         public ItemPrice(char item, double unitPrice, IPromotion promotion) : this(item, unitPrice)
@@ -143,10 +154,7 @@
             _promotion = promotion;
         }
 
-        public char Item { get; }
-        public double UnitPrice { get; }
-
-        public double SubTotal(int numberOfUnits)
+        public override double SubTotal(int numberOfUnits)
         {
             double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
             int unitCount = 0;
