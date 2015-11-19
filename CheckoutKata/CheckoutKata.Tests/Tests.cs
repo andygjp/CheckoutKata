@@ -119,9 +119,17 @@
         double GetPromotionalPrice(ref int numberOfUnits);
     }
 
+    public class NormalPrice : IPromotion
+    {
+        public double GetPromotionalPrice(ref int numberOfUnits)
+        {
+            return 0;
+        }
+    }
+
     public class ItemPrice
     {
-        private readonly IPromotion _promotion;
+        private readonly IPromotion _promotion = new NormalPrice();
 
         public ItemPrice(char item, double unitPrice)
         {
