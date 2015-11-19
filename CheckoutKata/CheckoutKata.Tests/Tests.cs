@@ -28,14 +28,16 @@
 
     public class Checkout
     {
+        private int _total;
+
         public double GetTotal()
         {
-            return 0;
+            return _total;
         }
 
         public void Scan(char item)
         {
-            throw new System.NotImplementedException();
+            _total = 50;
         }
     }
 }
