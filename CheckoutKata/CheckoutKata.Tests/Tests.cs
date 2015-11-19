@@ -87,12 +87,34 @@
         [Theory]
         [InlineData(2, 100)]
         [InlineData(3, 130)]
+        [InlineData(4, 180)]
+        [InlineData(5, 230)]
+        [InlineData(6, 260)]
         public void It_should_return_expectation(int numberOfScans, int expected)
         {
             var sut = new Checkout();
             for (int i = 0; i < numberOfScans; i++)
             {
                 sut.Scan('A');
+            }
+            double actual = sut.GetTotal();
+            actual.Should().Be(expected);
+        }
+    }
+
+    public class When_I_scan_in_multiple_varying_items
+    {
+        [Theory]
+        [InlineData(new[] { 'A', 'A', 'A', 'B' }, 160)]
+        [InlineData(new[] { 'A', 'A', 'A', 'B', 'B' }, 175)]
+        [InlineData(new[] { 'A', 'A', 'A', 'B', 'B', 'D' }, 190)]
+        [InlineData(new[] { 'D', 'A', 'B', 'A', 'B', 'A' }, 190)]
+        public void It_should_return_expectation(char[] items, int expected)
+        {
+            var sut = new Checkout();
+            foreach (var item in items)
+            {
+                sut.Scan(item);
             }
             double actual = sut.GetTotal();
             actual.Should().Be(expected);
