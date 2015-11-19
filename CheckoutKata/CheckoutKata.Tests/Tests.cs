@@ -156,30 +156,26 @@
 
         private PromotionResult GetPromotionalPrice(int numberOfUnits)
         {
-            return _promotion.GetPromotionalPrice(numberOfUnits);
+            int numberOfUnits1 = numberOfUnits;
+            var price = 0.0;
+            if (numberOfUnits1 >= _promotion._x)
+            {
+                int x = numberOfUnits1 /_promotion._x;
+                numberOfUnits1 = numberOfUnits1 %_promotion._x;
+                price = _promotion._y * x;
+            }
+            return new PromotionResult(price, numberOfUnits1);
         }
 
         private class GetXForY
         {
-            private readonly int _x;
-            private readonly double _y;
+            public readonly int _x;
+            public readonly double _y;
 
             public GetXForY(int x, double y)
             {
                 _x = x;
                 _y = y;
-            }
-
-            public PromotionResult GetPromotionalPrice(int numberOfUnits)
-            {
-                var price = 0.0;
-                if (numberOfUnits >= _x)
-                {
-                    int x = numberOfUnits / _x;
-                    numberOfUnits = numberOfUnits % _x;
-                    price = _y * x;
-                }
-                return new PromotionResult(price, numberOfUnits);
             }
         }
     }
