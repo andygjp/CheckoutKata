@@ -169,10 +169,10 @@
 
     public class Checkout
     {
-        private readonly Dictionary<char, ItemPrice> _itemPrices;
-        private readonly List<ItemPrice> _items = new List<ItemPrice>();
+        private readonly Dictionary<char, SubTotalCalculator> _itemPrices;
+        private readonly List<SubTotalCalculator> _items = new List<SubTotalCalculator>();
 
-        public Checkout(params ItemPrice[] itemPrices)
+        public Checkout(params SubTotalCalculator[] itemPrices)
         {
             _itemPrices = itemPrices.ToDictionary(x => x.Item);
         }
@@ -182,7 +182,7 @@
             return _items.GroupBy(x => x.Item).Select(x => _itemPrices[x.Key].SubTotal(x.Count())).Sum();
         }
 
-        private void Scan(ItemPrice itemPrice)
+        private void Scan(SubTotalCalculator itemPrice)
         {
             _items.Add(itemPrice);
         }
@@ -192,7 +192,7 @@
             Scan(FindItemPrice(item));
         }
 
-        private ItemPrice FindItemPrice(char item)
+        private SubTotalCalculator FindItemPrice(char item)
         {
             return _itemPrices[item];
         }
