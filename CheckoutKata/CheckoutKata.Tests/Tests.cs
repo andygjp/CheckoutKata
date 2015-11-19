@@ -143,11 +143,8 @@
 
     public class NormalPriceProxy : SubTotalCalculator
     {
-        private readonly ItemPrice _obj;
-
         public NormalPriceProxy(char item, double unitPrice) : base(item, unitPrice)
         {
-            _obj = new ItemPrice(item, unitPrice);
         }
 
         public override double SubTotal(int numberOfUnits)
@@ -157,7 +154,7 @@
             int unitCount = 0;
             while (unitCount < numberOfUnits1)
             {
-                subTotal += _obj.UnitPrice;
+                subTotal += UnitPrice;
                 unitCount++;
             }
             return subTotal;
@@ -167,37 +164,8 @@
     public class GetXForYProxy : SubTotalCalculator
     {
         private readonly IPromotion _promotion;
-        private readonly ItemPrice _obj;
 
         public GetXForYProxy(char item, double unitPrice, IPromotion promotion) : base(item, unitPrice)
-        {
-            _promotion = promotion;
-            _obj = new ItemPrice(item, unitPrice, promotion);
-        }
-
-        public override double SubTotal(int numberOfUnits)
-        {
-            int numberOfUnits1 = numberOfUnits;
-            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits1);
-            int unitCount = 0;
-            while (unitCount < numberOfUnits1)
-            {
-                subTotal += _obj.UnitPrice;
-                unitCount++;
-            }
-            return subTotal;
-        }
-    }
-
-    public class ItemPrice : SubTotalCalculator
-    {
-        private readonly IPromotion _promotion = new NormalPrice();
-
-        public ItemPrice(char item, double unitPrice) : base(item, unitPrice)
-        {
-        }
-
-        public ItemPrice(char item, double unitPrice, IPromotion promotion) : this(item, unitPrice)
         {
             _promotion = promotion;
         }
