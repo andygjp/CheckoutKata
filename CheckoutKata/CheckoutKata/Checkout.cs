@@ -11,10 +11,10 @@ namespace CheckoutKata
         {
             _items = new Dictionary<char, Item>
             {
-                ['A'] = Item.BuyXForY(50, 3, 130),
-                ['B'] = Item.BuyXForY(30, 2, 45),
-                ['C'] = Item.NonPromotional(20),
-                ['D'] = Item.NonPromotional(15)
+                ['A'] = new BuyXForYItem(50, 3, 130),
+                ['B'] = new BuyXForYItem(30, 2, 45),
+                ['C'] = new Item(20),
+                ['D'] = new Item(15)
             };
         }
 

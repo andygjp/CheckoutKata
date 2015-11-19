@@ -2,46 +2,22 @@ namespace CheckoutKata
 {
     public class Item
     {
-        private readonly int _price;
-        private int _scanned;
-        private readonly int _x;
-        private readonly int _promotion;
-
-        public static Item NonPromotional(int price)
+        public Item(int price)
         {
-            return new Item(price, 1, price);
+            Price = price;
         }
 
-        public static Item BuyXForY(int price, int x, int promotion)
-        {
-            return new Item(price, x, promotion);
-        }
+        protected int Price { get; }
+        protected int Scanned { get; private set; }
 
-        private Item(int price, int x, int promotion)
+        public virtual int SubTotal()
         {
-            _price = price;
-            _x = x;
-            _promotion = promotion;
-        }
-
-        public int SubTotal()
-        {
-            return GetPromotionalPrice() + GetNonPromotionalPrice();
-        }
-
-        private int GetNonPromotionalPrice()
-        {
-            return _scanned%_x*_price;
-        }
-
-        private int GetPromotionalPrice()
-        {
-            return _scanned/_x*_promotion;
+            return Price*Scanned;
         }
 
         public void Scan()
         {
-            _scanned++;
+            Scanned++;
         }
     }
 }
