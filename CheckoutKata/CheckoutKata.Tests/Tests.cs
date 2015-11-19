@@ -119,15 +119,7 @@
     {
         double GetPromotionalPrice(ref int numberOfUnits);
     }
-
-    public class NormalPrice : IPromotion
-    {
-        public double GetPromotionalPrice(ref int numberOfUnits)
-        {
-            return 0;
-        }
-    }
-
+    
     public abstract class SubTotalCalculator
     {
         protected SubTotalCalculator(char item, double unitPrice)
@@ -149,10 +141,9 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            int numberOfUnits1 = numberOfUnits;
             double subTotal = 0;
             int unitCount = 0;
-            while (unitCount < numberOfUnits1)
+            while (unitCount < numberOfUnits)
             {
                 subTotal += UnitPrice;
                 unitCount++;
@@ -172,10 +163,9 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            int numberOfUnits1 = numberOfUnits;
-            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits1);
+            double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
             int unitCount = 0;
-            while (unitCount < numberOfUnits1)
+            while (unitCount < numberOfUnits)
             {
                 subTotal += UnitPrice;
                 unitCount++;
