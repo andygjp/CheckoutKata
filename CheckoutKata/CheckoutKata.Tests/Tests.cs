@@ -122,7 +122,6 @@
 
     public class Checkout
     {
-        private int _total;
         private readonly IDictionary<char, Item> _items;
 
         public Checkout()
@@ -148,14 +147,7 @@
 
         public void Scan(char item)
         {
-            _total += GetPrice(item);
-        }
-
-        private int GetPrice(char key)
-        {
-            var item = _items[key];
-            item.Scan();
-            return item.SubTotal();
+            _items[item].Scan();
         }
     }
 
