@@ -152,7 +152,7 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            return _obj.SubTotal(numberOfUnits);
+            return _obj.SubTotal2(numberOfUnits);
         }
     }
 
@@ -167,7 +167,7 @@
 
         public override double SubTotal(int numberOfUnits)
         {
-            return _obj.SubTotal(numberOfUnits);
+            return _obj.SubTotal2(numberOfUnits);
         }
     }
 
@@ -185,6 +185,11 @@
         }
 
         public override double SubTotal(int numberOfUnits)
+        {
+            return SubTotal2(numberOfUnits);
+        }
+
+        public double SubTotal2(int numberOfUnits)
         {
             double subTotal = _promotion.GetPromotionalPrice(ref numberOfUnits);
             int unitCount = 0;
