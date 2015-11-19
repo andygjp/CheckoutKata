@@ -52,10 +52,7 @@
     public class Checkout
     {
         private int _total;
-        private static readonly Item _a = new Item(50);
-        private static readonly Item _other = new Item(30);
-        private readonly Dictionary<char, Item> _items = new Dictionary<char, Item> {['A'] = _a, ['x'] = _other};
-
+        private readonly Dictionary<char, Item> _items = new Dictionary<char, Item> {['A'] = new Item(50), ['x'] = new Item(30)};
 
         public double GetTotal()
         {
