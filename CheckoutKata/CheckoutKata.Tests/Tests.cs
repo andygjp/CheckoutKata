@@ -100,12 +100,22 @@
 
     public class Item
     {
+        private readonly int _price;
+
         public Item(int price)
         {
-            Price = price;
+            _price = price;
         }
 
-        public int Price { get; }
+        public int SubTotal()
+        {
+            return _price;
+        }
+
+        public void Scan()
+        {
+            
+        }
     }
 
     public class Checkout
@@ -139,9 +149,11 @@
             _total += GetPrice(item);
         }
 
-        private int GetPrice(char item)
+        private int GetPrice(char key)
         {
-            return _items[item].Price;
+            var item = _items[key];
+            item.Scan();
+            return item.SubTotal();
         }
     }
 
