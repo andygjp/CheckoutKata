@@ -1,5 +1,6 @@
 ﻿namespace CheckoutKata.Tests
 {
+    using System.Collections.Generic;
     using FluentAssertions;
     using Xunit;
 
@@ -51,8 +52,10 @@
     public class Checkout
     {
         private int _total;
-        private readonly Item _a = new Item(50);
-        private readonly Item _other = new Item(30);
+        private static readonly Item _a = new Item(50);
+        private static readonly Item _other = new Item(30);
+        private readonly Dictionary<char, Item> _items = new Dictionary<char, Item> {['A'] = _a, ['x'] = _other};
+
 
         public double GetTotal()
         {
@@ -82,4 +85,6 @@
             return _a.Price;
         }
     }
+
+    
 }
