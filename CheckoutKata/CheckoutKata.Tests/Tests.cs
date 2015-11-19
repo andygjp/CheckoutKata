@@ -40,13 +40,18 @@
 
     public class Item
     {
-        public int Price { get; } = 50;
+        public Item(int price)
+        {
+            Price = price;
+        }
+
+        public int Price { get; }
     }
 
     public class Checkout
     {
         private int _total;
-        private readonly Item _a = new Item();
+        private readonly Item _a = new Item(50);
 
         public double GetTotal()
         {
